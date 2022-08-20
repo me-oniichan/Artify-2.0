@@ -16,7 +16,7 @@ def home():
 def path():
     if request.method == 'POST':
         f = request.files["image"]
-        path = "static/"+ str(uuid4())
+        path = f"static/{str(uuid4())[:8]}.{f.filename.split('.')[-1]}"
         f.save(path)
         img  = cv2.imread(path)
         

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="static/CSS/style.css">
 </head>
 
 <body>
@@ -12,12 +13,12 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
-    <form action="http://127.0.0.1:5000/image" method="post" enctype="multipart/form-data">
+    <!-- <form action="http://127.0.0.1:5000/image" method="post" enctype="multipart/form-data">
         <input type="file" name="image" id="image" itemtype="image">
         <button type="submit">send</button>
-    </form>
-    <div id="root"></div>
-    <img src={{img}} alt="">
+    </form> -->
+    <div id="root" class="App"></div>
+    <!-- <img src={{img}} alt="">  -->
 
     <script src="static/components/index.js" type="text/babel"></script>
 </body>

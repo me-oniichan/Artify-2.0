@@ -1,8 +1,21 @@
-import Navbar from "./Navbar";
+const ImageArea = () =>{
+    return(
+        <img src="static/components/empty.jpg" alt="" />
+    )
+}
+
+const Navbar =()=> {
+    return <div className="navbar">
+        Artify 
+    </div>;
+}
 
 function App(){
     return(
-        <Navbar/>
+        <React.Fragment>
+            <Navbar/>
+            <ImageArea/>
+        </React.Fragment>
     )
 }
 

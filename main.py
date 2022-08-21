@@ -20,7 +20,7 @@ async def remove(path):
 
 @app.route("/")
 def home():
-    return "This is home route"
+    return render_template("index.html", img = "empty.jpg")
 
 
 @app.route("/image", methods=["GET", "POST"])
@@ -29,7 +29,6 @@ def path():
         f = request.files["image"]
         path = f"static/{str(uuid4())[:8]}.{f.filename.split('.')[-1]}"
         f.save(path)
-        # img = cv2.imread(path)
         img = cv2.imread(path)
         img_norm = img.astype(np.float16)/255.0
         img_norm = np.reshape(img_norm, (img_norm.shape[0]*img_norm.shape[1], 3))
@@ -41,6 +40,5 @@ def path():
         cv2.imwrite(path, recImg)
         return render_template("index.html", img=path)
     return "Something not right.."
-
 
 app.run()

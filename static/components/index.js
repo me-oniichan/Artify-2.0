@@ -1,9 +1,11 @@
+import Navbar from "./Navbar";
+
 function App(){
     return(
-        <button>This is a button</button>
+        <Navbar/>
     )
 }
 
 const domContainer = document.querySelector('#root');
 const root = ReactDOM.createRoot(domContainer);
-root.render(e(App));
+root.render(<App/>);

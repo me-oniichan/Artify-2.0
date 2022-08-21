@@ -7,13 +7,13 @@ from sklearn.cluster import KMeans
 
 app = Flask(__name__)
 maxIter = 10
-maxColor = 23
+maxColor = 18
 app.config['MAX_CONTENT_PATH'] = 2000000
 
 
 @app.route("/")
 def home():
-    return render_template("index.html", img = "empty.jpg")
+    return render_template("index.html", img = "static/empty.jpg")
 
 
 @app.route("/image", methods=["GET", "POST"])

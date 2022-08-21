@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
@@ -11,11 +10,16 @@
 <body>
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
     <form action="http://127.0.0.1:5000/image" method="post" enctype="multipart/form-data">
-        <input type="file" name="image" id="image">
+        <input type="file" name="image" id="image" itemtype="image">
         <button type="submit">send</button>
     </form>
+    <div id="root"></div>
     <img src={{img}} alt="">
+
+    <script src="components/script.js" type="text/babel"></script>
 </body>
 
 </html>

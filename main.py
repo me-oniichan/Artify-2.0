@@ -1,6 +1,4 @@
-import os
 from uuid import uuid4
-import asyncio
 
 import cv2
 import numpy as np
@@ -11,11 +9,6 @@ app = Flask(__name__)
 maxIter = 10
 maxColor = 23
 app.config['MAX_CONTENT_PATH'] = 2000000
-
-
-async def remove(path):
-    asyncio.sleep(10000)
-    os.remove(path=path)
 
 
 @app.route("/")

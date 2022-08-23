@@ -20,16 +20,18 @@ const ImageArea = () => {
 
     const Convert = () => {
         const formData = new FormData();
-        const imagefile = document.querySelector('#file');
-        formData.append("image", imagefile.files[0]);
-        axios.post('http://127.0.0.1:5000/image', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        }).then(response=>{
-            console.log(response)
-        })
+        let imagefile = document.querySelector("#file");
 
+        formData.append("image", imagefile.files[0]);
+        axios
+            .post("http://127.0.0.1:5000/image", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((response) => {
+                setSource("http://127.0.0.1:5000/" + response.data)
+            });
     };
 
     return (

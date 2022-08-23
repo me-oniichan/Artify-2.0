@@ -1,7 +1,5 @@
-from uuid import uuid4
-
 import cv2
-import io
+import uuid
 import numpy as np
 from flask import Flask, render_template, request, send_file
 from sklearn.cluster import KMeans
@@ -32,8 +30,16 @@ def path():
         recImg = (kmean.predict(img_norm))
         recImg = recoverd[recImg]
         recImg = np.reshape(recImg, img.shape)
-        return send_file(path_or_file = io.BytesIO(cv2.imencode("."+f.filename.split(".")[-1], recImg)[1]), mimetype="image/gif")
+        img_id = str(uuid.uuid4())[:8] + '.' + f.filename.split('.')[-1]
+        path = "static/Images/" + img_id
+        
+        cv2.imwrite(path, recImg)
+        return path
     return "Something not right.."
+
+@app.route("/id/<string:imageid>")
+def getimage(imageid):
+    return
 
 
 app.run(debug=True)

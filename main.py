@@ -46,5 +46,7 @@ def getimage():
     os.remove("static/Images/" + request.json['path'])
     return "success"
 
-    
-app.run(debug=True)
+try:
+    app.run(debug=True)
+except Exception as e:
+    print("error : ", e)

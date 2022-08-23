@@ -1,7 +1,21 @@
+const Loading = ()=>{
+    return <div className="convert">
+        Converting {"  "}
+        <div className="animation">
+            <div className="ball"></div>
+            <div className="ball" style={{animationDelay:"0.25s", background : "#9448ff"}}></div>
+            <div className="ball" style={{animationDelay:"0.5s", background : "purple"}}></div>
+        </div>
+    </div>;
+}
+
+
+let blob;
 const ImageArea = () => {
     const source = "static/components/empty.jpg";
+    const [loading, setLoading] = React.useState(false);
 
-    let blob;
+
 
     const Upload = (e) => {
         if (!e.target.files[0]) return;
@@ -36,6 +50,7 @@ const ImageArea = () => {
     const Convert = () => {
         const formData = new FormData();
         let imagefile = document.querySelector("#file");
+
         let ext = imagefile.files[0].name.split(".");
         ext = ext[ext.length - 1];
         formData.append("image", blob);
@@ -47,22 +62,26 @@ const ImageArea = () => {
                 },
             })
             .then((response) => {
-                document.getElementById("image").src =
+                let elem = document.getElementById("image"); 
+                elem.src =
                     "http://127.0.0.1:5000/static/Images/" + response.data;
-                document.getElementById("image").onload = function () {
+
+                elem.onload = function () {
                     axios
                         .post("http://127.0.0.1:5000/remfromdisk", {
                             path: response.data,
+                        }).then(r=>{
+                            elem.onload = function(){}
                         })
-                        .then((r) => {
-                            
-                        });
                 };
+
+                setLoading(false);
             });
     };
 
     return (
         <div className="body">
+            {loading? <Loading/>: ""}
             <img id="image" src={source} alt="" />
             <label htmlFor="file">Upload</label>
             <input
@@ -75,7 +94,10 @@ const ImageArea = () => {
                     Upload(e);
                 }}
             />
-            <button className="btn" onClick={Convert}>
+            <button className="btn" onClick={()=>{
+                setLoading(true);
+                Convert();
+            }}>
                 Convert
             </button>
         </div>

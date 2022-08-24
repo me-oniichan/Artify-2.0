@@ -34,7 +34,7 @@ def path(ext):
         recImg = recoverd[recImg]
         recImg = np.reshape(recImg, img.shape)
         img_id = str(uuid.uuid4())[:8] + '.' + ext
-        path = "static/Images/" + img_id
+        path = "app/static/Images/" + img_id
         cv2.imwrite(path, recImg)
         return img_id
     
@@ -43,6 +43,6 @@ def path(ext):
 
 @app.route("/remfromdisk", methods = ["POST"])
 def getimage():
-    os.remove("static/Images/" + request.json['path'])
+    os.remove("app/static/Images/" + request.json['path'])
     return "success"
 

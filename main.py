@@ -47,6 +47,6 @@ def getimage():
     return "success"
 
 try:
-    app.run(debug=True)
+    app.run()
 except Exception as e:
     print("error : ", e)

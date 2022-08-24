@@ -64,7 +64,7 @@ const ImageArea = () => {
             .then((response) => {
                 let elem = document.getElementById("image"); 
                 elem.src =
-                    "https://artify-2.herokuapp.com/static/Images/" + response.data;
+                    "https://artify-2.herokuapp.com/app/static/Images/" + response.data;
 
                 // elem.onload = function () {
                 //     axios

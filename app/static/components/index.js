@@ -66,14 +66,14 @@ const ImageArea = () => {
                 elem.src =
                     "https://artify-2.herokuapp.com/static/Images/" + response.data;
 
-                elem.onload = function () {
-                    axios
-                        .post("https://artify-2.herokuapp.com/remfromdisk", {
-                            path: response.data,
-                        }).then(r=>{
-                            elem.onload = function(){}
-                        })
-                };
+                // elem.onload = function () {
+                //     axios
+                //         .post("https://artify-2.herokuapp.com/remfromdisk", {
+                //             path: response.data,
+                //         }).then(r=>{
+                //             elem.onload = function(){}
+                //         })
+                // };
 
                 setLoading(false);
             });

@@ -56,7 +56,7 @@ const ImageArea = () => {
         formData.append("image", blob);
 
         axios
-            .post("http://127.0.0.1:5000/image/" + ext, formData, {
+            .post("https://artify-2.herokuapp.com/image/" + ext, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -64,11 +64,11 @@ const ImageArea = () => {
             .then((response) => {
                 let elem = document.getElementById("image"); 
                 elem.src =
-                    "http://127.0.0.1:5000/static/Images/" + response.data;
+                    "https://artify-2.herokuapp.com/static/Images/" + response.data;
 
                 elem.onload = function () {
                     axios
-                        .post("http://127.0.0.1:5000/remfromdisk", {
+                        .post("https://artify-2.herokuapp.com/remfromdisk", {
                             path: response.data,
                         }).then(r=>{
                             elem.onload = function(){}

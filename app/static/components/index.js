@@ -55,14 +55,20 @@ const ImageArea = () => {
         formData.append("image", blob);
 
         axios
-            .post("http://127.0.0.1:5000/image/" + ext, formData, {
+            .post("https://artify-2.herokuapp.com/image/" + ext, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
                 responseType : "blob"
             })
             .then((response) => {
-                document.getElementById("image").src = URL.createObjectURL(response.data)
+                let elem =document.getElementById("image")
+                elem.src = URL.createObjectURL(response.data)
+
+                elem.onload = function(){
+                    URL.revokeObjectURL(elem.src);
+                    elem.onload = function(){}
+                }
                 
                 setLoading(false);
             });

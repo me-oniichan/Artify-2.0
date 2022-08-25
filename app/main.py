@@ -1,8 +1,8 @@
 import cv2
 import os
-import uuid
+import io
 import numpy as np
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, Response
 from sklearn.cluster import KMeans
 
 app = Flask(__name__)
@@ -33,10 +33,12 @@ def path(ext):
         recImg = (kmean.predict(img_norm))
         recImg = recoverd[recImg]
         recImg = np.reshape(recImg, img.shape)
-        img_id = str(uuid.uuid4())[:8] + '.' + ext
-        path = "app/static/Images/" + img_id
-        cv2.imwrite(path, recImg)
-        return img_id
+        
+        #file buffer approach
+        _, recImg = cv2.imencode("."+ext, recImg)
+        recImg = io.BytesIO(recImg)
+        
+        return Response(recImg, mimetype="image/png")
     
     return "Something not right.."
 
@@ -45,4 +47,3 @@ def path(ext):
 def getimage():
     os.remove("app/static/Images/" + request.json['path'])
     return "success"
-

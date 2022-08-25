@@ -1,21 +1,20 @@
-const Loading = ()=>{
-    return <div className="convert">
-        Converting {"  "}
-        <div className="animation">
-            <div className="ball"></div>
-            <div className="ball" style={{animationDelay:"0.25s", background : "#9448ff"}}></div>
-            <div className="ball" style={{animationDelay:"0.5s", background : "purple"}}></div>
+const Loading = () => {
+    return (
+        <div className="convert">
+            Converting {"  "}
+            <div className="animation">
+                <div className="ball"></div>
+                <div className="ball" style={{ animationDelay: "0.25s", background: "#9448ff" }}></div>
+                <div className="ball" style={{ animationDelay: "0.5s", background: "purple" }}></div>
+            </div>
         </div>
-    </div>;
-}
-
+    );
+};
 
 let blob;
 const ImageArea = () => {
     const source = "static/components/empty.jpg";
     const [loading, setLoading] = React.useState(false);
-
-
 
     const Upload = (e) => {
         if (!e.target.files[0]) return;
@@ -56,32 +55,22 @@ const ImageArea = () => {
         formData.append("image", blob);
 
         axios
-            .post("https://artify-2.herokuapp.com/image/" + ext, formData, {
+            .post("http://127.0.0.1:5000/image/" + ext, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
+                responseType : "blob"
             })
             .then((response) => {
-                let elem = document.getElementById("image"); 
-                elem.src =
-                    "https://artify-2.herokuapp.com/app/static/Images/" + response.data;
-
-                // elem.onload = function () {
-                //     axios
-                //         .post("https://artify-2.herokuapp.com/remfromdisk", {
-                //             path: response.data,
-                //         }).then(r=>{
-                //             elem.onload = function(){}
-                //         })
-                // };
-
+                document.getElementById("image").src = URL.createObjectURL(response.data)
+                
                 setLoading(false);
             });
     };
 
     return (
         <div className="body">
-            {loading? <Loading/>: ""}
+            {loading ? <Loading /> : ""}
             <img id="image" src={source} alt="" />
             <label htmlFor="file">Upload</label>
             <input
@@ -94,10 +83,13 @@ const ImageArea = () => {
                     Upload(e);
                 }}
             />
-            <button className="btn" onClick={()=>{
-                setLoading(true);
-                Convert();
-            }}>
+            <button
+                className="btn"
+                onClick={() => {
+                    setLoading(true);
+                    Convert();
+                }}
+            >
                 Convert
             </button>
         </div>

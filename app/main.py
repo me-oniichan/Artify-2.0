@@ -1,5 +1,4 @@
 import cv2
-import os
 import io
 import numpy as np
 from flask import Flask, render_template, request, Response
@@ -23,14 +22,16 @@ def path(ext):
 
         img = cv2.imdecode(np.frombuffer(
             f.stream.read(), dtype=np.uint8), cv2.IMREAD_UNCHANGED)
-
-        img_norm = img.astype(np.float16)/255.0
-        img_norm = np.reshape(
-            img_norm, (img_norm.shape[0]*img_norm.shape[1], 4))
-        kmean = KMeans(n_clusters=maxColor, max_iter=maxIter,
-                       n_init=10).fit(img_norm)
+        
+        img_norm = cv2.resize(img, (24,24))
+        img_norm = img_norm.astype(np.float16)/255.0
+        img_norm = np.reshape(img_norm, (img_norm.shape[0]*img_norm.shape[1], 4))
+        
+        kmean = KMeans(n_clusters=maxColor, max_iter=maxIter,n_init=10).fit(img_norm)
+        
+        
         recoverd = (kmean.cluster_centers_*255).astype(np.uint8)
-        recImg = (kmean.predict(img_norm))
+        recImg = kmean.predict( np.reshape(img, (img.shape[0]*img.shape[1], 4)).astype(np.float16)/255.0 )
         recImg = recoverd[recImg]
         recImg = np.reshape(recImg, img.shape)
         
@@ -41,9 +42,3 @@ def path(ext):
         return Response(recImg, mimetype="image/png")
     
     return "Something not right.."
-
-
-@app.route("/remfromdisk", methods = ["POST"])
-def getimage():
-    os.remove("app/static/Images/" + request.json['path'])
-    return "success"
